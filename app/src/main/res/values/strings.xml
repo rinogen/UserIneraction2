@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">UserIneraction2</string>
+    <string-array name="labels">
+            <item>Home</item>
+            <item>Work</item>
+            <item>School</item>
+            <item>Office</item>
+    </string-array>
+</resources>

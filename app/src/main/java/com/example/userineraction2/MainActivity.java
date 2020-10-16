@@ -1,0 +1,131 @@
+package com.example.userineraction2;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.DialogInterface;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class MainActivity extends AppCompatActivity {
+    Spinner spinner;
+    EditText editText;
+    TextView textView;
+    String labels;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        spinner = findViewById(R.id.spinner_label);
+        editText = findViewById(R.id.edit_input);
+        textView = findViewById(R.id.textPhone);
+
+        ArrayAdapter<CharSequence> adapter=ArrayAdapter
+                .createFromResource(this, R.array.labels,
+                        android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        if(spinner != null){
+            spinner.setAdapter(adapter);
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    labels = adapterView.getItemAtPosition(i).toString();
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
+        }
+    }
+
+    public void showText(View view){
+        String showString="Phone number :" +labels+ "-" +editText.getText().toString();
+        textView.setText(showString);
+    }
+
+    public void onRadioButtonCLicked(View view) {
+        boolean isChecked = ((RadioButton) view).isChecked();
+        switch (view.getId()) {
+            case R.id.radio_p1:
+                if (isChecked)
+                    Toast.makeText(this, "Pilihan 1",
+                            Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.radio_p2:
+                if (isChecked)
+                    Toast.makeText(this, "Pilihan 2",
+                            Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.radio_p3:
+                if (isChecked)
+                    Toast.makeText(this, "Pilihan 3",
+                            Toast.LENGTH_SHORT).show();
+                break;
+        }
+
+    }
+
+    public void showAlert(View view) {
+        AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder( this);
+        myAlertBuilder.setTitle("Alert");
+        myAlertBuilder.setMessage("Click OK to Continue, or Cancel to Stop");
+        myAlertBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(MainActivity.this, "Anda Memilih OK", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        myAlertBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(MainActivity.this, "Anda Memilih Cancel", Toast.LENGTH_SHORT).show();
+            }
+        });
+        myAlertBuilder.create().show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menu_add:
+                Toast.makeText(MainActivity.this, "Anda Memilih Add",
+                        Toast.LENGTH_SHORT).show();
+                return true;
+
+            case R.id.menu_update:
+                Toast.makeText(MainActivity.this, "Anda Memilih Update",
+                        Toast.LENGTH_SHORT).show();
+                return true;
+
+            case R.id.menu_delete:
+                Toast.makeText(MainActivity.this, "Anda Memilih Delete",
+                        Toast.LENGTH_SHORT).show();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
+}
